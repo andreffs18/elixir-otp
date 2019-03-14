@@ -88,11 +88,11 @@ defmodule ThySupervisor do
   end
 
   def handle_info({:EXIT, from_pid, :killed}, state) do
-    {:no_reply, Map.delete(state, from_pid)}
+    {:noreply, Map.delete(state, from_pid)}
   end
 
   def handle_info({:EXIT, from_pid, :normal}, state) do
-    {:no_reply, Map.delete(state, from_pid)}
+    {:noreply, Map.delete(state, from_pid)}
   end
 
   def handle_info({:EXIT, from_pid, _reason}, state) do
@@ -103,12 +103,12 @@ defmodule ThySupervisor do
             new_state = state
               |> Map.delete(from_pid)
               |> Map.put(pid, child_spec)
-            {:no_reply, new_state}
+            {:noreply, new_state}
           :error ->
-            {:no_reply, state}
+            {:noreply, state}
         end
       _ ->
-        {:no_reply, state}
+        {:noreply, state}
     end
   end
 
